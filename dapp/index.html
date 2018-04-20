@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8"/>
+    <title>Buy MyVotableToken & Voting</title>
+    <script src="bundle.js"></script>
+    <style>
+        .coin {
+            float: left
+        }
+        .loader {
+            border: 5px solid #f3f3f3; /* Light grey */
+            border-top: 5px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <h1>Token Swap</h1>
+    <div id="meta-mask-required"></div>
+    <button id="watch">watch balance</button>
+    <br><div class="coin" id="coinbase"></div>
+    <br><br>
+    <table class="table">
+        <tr>
+            <th scope="col" width="40%">ETH / TOKEN</th>
+            <th scope="col">Balance</th>
+        </tr>
+        <tr>
+            <td>
+                <!--<img src="img/ether.jpg" width="70" height="70">-->
+                <font size="5">ETH:</font>
+            </td>
+            <td>
+                <font size="6" id="current"></font>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <!--<img src="img/burrowcoin.jpg" width="70" height="70">-->
+                <font size="5">MyVotableToken:</font>
+                <!--<img src="img/ether.jpg" width="50" height="50">-->
+            </td>
+            <td>
+                <font size="6" id="mytoken"></font>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="text" id="buyTokenAmount" placeholder="Amount ETH"><button id="buyToken">Buy MyVotableToken</button>
+            </td>
+            <td>
+                <div class="loader" id="loader" hidden="true"></div>
+            </td>
+        </tr>
+    </table>
+    <div style="height:100px;">
+
+    </div>
+    <div style="height:500px;">
+        <h1>Voting</h1>
+        <table class="table">
+            <tr>
+               <td width="700">
+                   <div class="progress">
+                       <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width:0%" id="yes">
+                           Yes
+                       </div>
+                       <!--<div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" style="width:10%">-->
+                           <!--Warning-->
+                       <!--</div>-->
+                       <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" style="width:0%" id="no">
+                           No
+                       </div>
+                   </div>
+               </td>
+            </tr>
+            <tr>
+                <td>
+                    <br>
+                    <input type="text" id="vote-value" placeholder="Amount for Voting">
+                    <button id="vote-yes">vote yes</button>
+                    <button id="vote-no">vete no</button>
+                    <div class="loader" id="loader-vote" hidden="true"></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+</body>
+</html>
