@@ -1,6 +1,6 @@
 // 'use strict'
 
-var Web3 = require('web3');
+// var Web3 = require('web3');
 
 var ContractABI = web3.eth.contract(
     [
