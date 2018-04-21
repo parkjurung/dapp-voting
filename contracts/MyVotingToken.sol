@@ -268,8 +268,8 @@ contract VoteInterface {
     function votedResult() public view returns (VoteState _voteState);
 
     event Voting(address indexed voter, uint256 voteYes, uint256 voteNo, uint256 votedYes, uint256 votedNo);
-    function voteYes() public;
-    function voteNo() public;
+    function voteYes(uint256 _value) public;
+    function voteNo(uint256 _value) public;
 }
 
 contract MyVotableToken is BasicToken, Ownable, VoteInterface {
@@ -277,6 +277,7 @@ contract MyVotableToken is BasicToken, Ownable, VoteInterface {
     string public constant name = "My Votable Token";
     string public constant symbol = "MVT";
     uint8 public constant decimals = 18;
+    uint8 public rate = 10;
 
     // uint256 votedYes_;
     // uint256 votedNo_;
@@ -315,29 +316,48 @@ contract MyVotableToken is BasicToken, Ownable, VoteInterface {
         return (votedYes(), votedNo());
     }
 
-    function voteYes() public {
+    function voteYes(uint256 _value) public {
+        // require(balances[msg.sender] > 0);
+        // votedYes_ = votedYes_.add(balances[msg.sender]);
+        // emit Voting(msg.sender, balances[msg.sender], 0, votedYes(), votedNo());
+        // balances[msg.sender] = 0;
+
         require(balances[msg.sender] > 0);
-        votedYes_ = votedYes_.add(balances[msg.sender]);
-        balances[msg.sender] = 0;
-        emit Voting(msg.sender, balances[msg.sender], 0, votedYes(), votedNo());
+        if (_value == 0) {
+            _value = balances[msg.sender];
+        }
+        require(balances[msg.sender] >= _value);
+        votedYes_ = votedYes_.add(_value);
+        emit Voting(msg.sender, _value, 0, votedYes(), votedNo());
+        balances[msg.sender] = balances[msg.sender].sub(_value);
     }
 
-    function voteNo() public {
+    function voteNo(uint256 _value) public {
+        // require(balances[msg.sender] > 0);
+        // votedNo_ = votedNo_.add(balances[msg.sender]);
+        // emit Voting(msg.sender, 0, balances[msg.sender], votedYes(), votedNo());
+        // balances[msg.sender] = 0;
+
         require(balances[msg.sender] > 0);
-        votedNo_ = votedNo_.add(balances[msg.sender]);
-        balances[msg.sender] = 0;
-        emit Voting(msg.sender, 0, balances[msg.sender], votedYes(), votedNo());
+        if (_value == 0) {
+            _value = balances[msg.sender];
+        }
+        require(balances[msg.sender] >= _value);
+        votedNo_ = votedNo_.add(_value);
+        emit Voting(msg.sender, 0, _value, votedYes(), votedNo());
+        balances[msg.sender] = balances[msg.sender].sub(_value);
     }
 
     function MyVotableToken() public{
-        votedYes_ = 10;
-        votedNo_ = 10;
+        // votedYes_ = 10;
+        // votedNo_ = 10;
     }
 
     function() payable public {
         require(msg.value > 0);
-        totalSupply_ = totalSupply_.add(msg.value);
-        balances[msg.sender] = balances[msg.sender].add(msg.value);
+        uint256 mint = msg.value * rate;
+        totalSupply_ = totalSupply_.add(mint);
+        balances[msg.sender] = balances[msg.sender].add(mint);
     }
 
     function votingClear() public onlyOwner {
