@@ -337,7 +337,7 @@ window.addEventListener('load', function() {
         web3 = new Web3(web3.currentProvider);
         console.log(web3.version);
         console.log('metamask');
-        Contract = ContractABI.at('0x806326f4cb299f2eb92a8f11d569c8d0c1d16767');
+        Contract = ContractABI.at('0x7a3f323595ecdf28788f78e3cffa779776419e95');
         console.log(Contract);
     } else {
         console.log('No web3? You should consider trying MetaMask!');
